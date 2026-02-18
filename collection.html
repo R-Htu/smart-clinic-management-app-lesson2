@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySQL Clinic Database Lessons</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #f8f3e9;
+      --bg-2: #e7f5ff;
+      --ink: #0f172a;
+      --accent: #0f766e;
+      --accent-2: #f59e0b;
+    }
+
+    body {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 10% -10%, #fff6e5 10%, transparent 60%),
+        radial-gradient(900px 500px at 90% -5%, #d8f5ff 12%, transparent 55%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      color: var(--ink);
+    }
+
+    pre,
+    code {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+    }
+
+    pre {
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 640px) {
+      pre {
+        font-size: 0.85rem;
+      }
+
+      .lesson-card {
+        padding: 1.25rem;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+        line-height: 1.8rem;
+      }
+    }
+
+    .lesson-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(15, 118, 110, 0.18);
+      border-radius: 1.25rem;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    .toc-link {
+      border: 1px solid rgba(15, 118, 110, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .toc-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(15, 118, 110, 0.5);
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 50;
+      padding: 0.65rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.95);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(15, 23, 42, 0.22);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen">
+
+  <div class="max-w-6xl mx-auto p-6 md:p-10">
+
+    <div class="text-center mb-8">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1 text-sm font-semibold text-emerald-700 shadow">
+        MySQL Clinic Training
+      </span>
+      <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mt-4">
+        MySQL Clinic Database Lessons
+      </h1>
+      <p class="mt-3 text-slate-600 max-w-2xl mx-auto">
+        Learn the core database commands with a clean, step-by-step clinic example. Jump to any lesson below.
+      </p>
+    </div>
+
+    <div class="lesson-card p-6 mb-8" id="top">
+      <h2 class="text-xl font-semibold text-slate-800 mb-4">Content Links</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-1">Lesson 1: Create Database</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-2">Lesson 2: Use Database</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-3">Lesson 3: Drop Database</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-4">Lesson 4: Read Only Mode</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-5">Lesson 5: Create Patients Table</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-6">Lesson 6: Show Data</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-7">Lesson 7: Rename Table</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-8">Lesson 8: Alter Table</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-9">Lesson 9: Drop Table</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-10">Lesson 10: Update Data</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-11">Lesson 11: Delete Data</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-12">Lesson 12: Date &amp; Time Functions</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-13">Lesson 13: Unique Constraint</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-14">Lesson 14: NOT NULL Constraint</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-15">Lesson 15: CHECK Constraint</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-16">Lesson 16: Primary Key</a>
+        <a class="toc-link rounded-xl px-4 py-3 text-slate-700 font-semibold" href="#lesson-17">Lesson 17: AUTO_INCREMENT</a>
+      </div>
+    </div>
+
+    <!-- Lesson 1 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-1">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-3">Lesson 1: Create Database</h2>
+      <p class="mb-3">Create a new clinic database:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">CREATE DATABASE clinic_db;</pre>
+    </div>
+
+    <!-- Lesson 2 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-2">
+      <h2 class="text-2xl font-bold text-teal-700 mb-3">Lesson 2: Use Database</h2>
+      <p>Select the database before creating tables:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">USE clinic_db;</pre>
+    </div>
+
+    <!-- Lesson 3 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-3">
+      <h2 class="text-2xl font-bold text-rose-600 mb-3">Lesson 3: Drop Database</h2>
+      <p>Delete database (be careful!):</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">DROP DATABASE clinic_db;</pre>
+    </div>
+
+    <!-- Lesson 4 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-4">
+      <h2 class="text-2xl font-bold text-amber-700 mb-3">Lesson 4: Read Only Mode</h2>
+      <p>Make database read-only:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">ALTER DATABASE clinic_db READ ONLY = 1;</pre>
+
+      <p class="mt-4">Turn off read-only:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">ALTER DATABASE clinic_db READ ONLY = 0;</pre>
+    </div>
+
+    <!-- Lesson 5 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-5">
+      <h2 class="text-2xl font-bold text-fuchsia-700 mb-3">Lesson 5: Create Patients Table</h2>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+CREATE TABLE patients(
+    patient_id INT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    date_of_birth DATE
+);
+      </pre>
+    </div>
+
+    <!-- Lesson 6 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-6">
+      <h2 class="text-2xl font-bold text-orange-700 mb-3">Lesson 6: Show Data</h2>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">SELECT * FROM patients;</pre>
+    </div>
+
+    <!-- Lesson 7 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-7">
+      <h2 class="text-2xl font-bold text-sky-700 mb-3">Lesson 7: Rename Table</h2>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+RENAME TABLE patients TO patient_record;
+      </pre>
+    </div>
+
+    <!-- Lesson 8 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-8">
+      <h2 class="text-2xl font-bold text-cyan-700 mb-3">Lesson 8: Alter Table</h2>
+
+      <p class="mb-2">Add column:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+ALTER TABLE patient_record
+ADD phone VARCHAR(15);
+      </pre>
+
+      <p class="mt-4 mb-2">Rename column:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+ALTER TABLE patient_record
+RENAME COLUMN phone TO phone_number;
+      </pre>
+
+      <p class="mt-4 mb-2">Modify column size:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+ALTER TABLE patient_record
+MODIFY COLUMN phone_number VARCHAR(20);
+      </pre>
+
+      <p class="mt-4 mb-2">Move column position:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+ALTER TABLE patient_record
+MODIFY COLUMN phone_number VARCHAR(20)
+AFTER first_name;
+      </pre>
+    </div>
+
+    <!-- Lesson 9 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-9">
+      <h2 class="text-2xl font-bold text-rose-700 mb-3">Lesson 9: Drop Table</h2>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+DROP TABLE patient_record;
+      </pre>
+    </div>
+
+        <!-- Lesson 10 -->
+        <div class="lesson-card p-6 mb-6" id="lesson-10">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-3">Lesson 10: Update Data</h2>
+      <p class="mb-3">Update a patient phone number by id:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    UPDATE patient_record
+    SET phone_number = '09-555-1234'
+    WHERE patient_id = 1;
+      </pre>
+
+      <p class="mt-4 mb-3">Update multiple fields:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    UPDATE patient_record
+    SET first_name = 'Aye', last_name = 'Tun'
+    WHERE patient_id = 2;
+      </pre>
+        </div>
+
+        <!-- Lesson 11 -->
+        <div class="lesson-card p-6 mb-6" id="lesson-11">
+      <h2 class="text-2xl font-bold text-rose-700 mb-3">Lesson 11: Delete Data</h2>
+      <p class="mb-3">Delete one patient record safely with a condition:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    DELETE FROM patient_record
+    WHERE patient_id = 3;
+      </pre>
+
+      <p class="mt-4 mb-3">Delete all rows in a table:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    DELETE FROM patient_record;
+      </pre>
+        </div>
+
+    <!-- Lesson 12 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-12">
+      <h2 class="text-2xl font-bold text-teal-700 mb-3">Lesson 12: Date &amp; Time Functions</h2>
+      <p class="mb-3">Create a table for date and time testing:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+USE projectdb;
+
+CREATE TABLE timedb(
+  my_date DATE,
+  my_time TIME,
+  my_datetime DATETIME
+);
+      </pre>
+
+      <p class="mt-4 mb-3">Insert the current date, time, and date-time:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+INSERT INTO timedb(my_time, my_date, my_datetime)
+VALUES (CURRENT_TIME(), CURRENT_DATE(), NOW());
+      </pre>
+
+      <p class="mt-4 mb-3">View the results:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">SELECT * FROM timedb;</pre>
+
+      <div class="mt-4 text-slate-700">
+        <p><span class="font-semibold">CURRENT_TIME()</span> returns only the current time.</p>
+        <p><span class="font-semibold">CURRENT_DATE()</span> returns only the current date.</p>
+        <p><span class="font-semibold">NOW()</span> returns the current date and time together.</p>
+      </div>
+    </div>
+
+    <!-- Lesson 13 -->
+    <div class="lesson-card p-6 mb-6" id="lesson-13">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-3">Lesson 13: Unique Constraint</h2>
+      <p class="mb-3">Make sure each email can appear only once:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+CREATE TABLE staff(
+  staff_id INT,
+  email VARCHAR(100) UNIQUE,
+  full_name VARCHAR(100)
+);
+      </pre>
+
+      <p class="mt-4 mb-3">Insert sample staff records:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+INSERT INTO staff(staff_id, email, full_name)
+VALUES
+  (1, 'nandar@clinic.com', 'Nandar Kyaw'),
+  (2, 'thandar@clinic.com', 'Thandar Hlaing'),
+  (3, 'aungmin@clinic.com', 'Aung Min');
+      </pre>
+
+      <p class="mt-4 mb-3">Try a duplicate email (this will fail because of UNIQUE):</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    INSERT INTO staff(staff_id, email, full_name)
+    VALUES (4, 'nandar@clinic.com', 'Duplicate Email');
+      </pre>
+
+      <p class="mt-4 mb-3">Add a UNIQUE rule after the table exists:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+ALTER TABLE staff
+ADD CONSTRAINT unique_staff_email UNIQUE (email);
+      </pre>
+
+      <div class="mt-4 text-slate-700">
+        <p><span class="font-semibold">unique_staff_email</span> is the constraint name, so you can manage it later.</p>
+        <p>In MySQL, a UNIQUE constraint is stored as a unique index.</p>
+      </div>
+
+      <p class="mt-4 mb-3">Remove the UNIQUE rule (using the constraint name):</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    ALTER TABLE staff
+    DROP INDEX unique_staff_email;
+      </pre>
+
+      <p class="mt-4 mb-3">List indexes (to see UNIQUE constraints):</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">SHOW INDEX FROM staff;</pre>
+
+      <p class="mt-4 mb-3">Rename the UNIQUE index (constraint name):</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    ALTER TABLE staff
+    RENAME INDEX unique_staff_email TO unique_staff_email_v2;
+      </pre>
+    </div>
+
+        <!-- Lesson 14 -->
+        <div class="lesson-card p-6 mb-6" id="lesson-14">
+      <h2 class="text-2xl font-bold text-sky-700 mb-3">Lesson 14: NOT NULL Constraint</h2>
+      <p class="mb-3">Require a value so the column cannot be empty:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    CREATE TABLE appointments(
+      appointment_id INT,
+      patient_name VARCHAR(100) NOT NULL,
+      appointment_date DATE NOT NULL,
+      notes VARCHAR(200)
+    );
+      </pre>
+
+      <p class="mt-4 mb-3">Add NOT NULL to an existing column:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    ALTER TABLE appointments
+    MODIFY COLUMN patient_name VARCHAR(100) NOT NULL;
+      </pre>
+
+      <p class="mt-4 mb-3">Remove NOT NULL if you want to allow empty values:</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    ALTER TABLE appointments
+    MODIFY COLUMN patient_name VARCHAR(100) NULL;
+      </pre>
+
+      <p class="mt-4 mb-3">Try inserting without a required value (this will fail):</p>
+      <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    INSERT INTO appointments(appointment_id, patient_name, appointment_date)
+    VALUES (1, NULL, '2026-02-10');
+      </pre>
+        </div>
+
+        <!-- Lesson 15 -->
+        <div class="lesson-card p-6 mb-6" id="lesson-15">
+          <h2 class="text-2xl font-bold text-emerald-700 mb-3">Lesson 15: CHECK Constraint</h2>
+          <p class="mb-3">Validate values before saving a row:</p>
+          <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    CREATE TABLE payments (
+      payment_id INT,
+      amount DECIMAL(10,2) CHECK (amount > 0)
+    );
+          </pre>
+
+          <p class="mt-4 mb-3">Add a CHECK rule after the table exists:</p>
+          <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    ALTER TABLE payments
+    ADD CONSTRAINT chk_amount_positive CHECK (amount > 0);
+          </pre>
+
+          <p class="mt-4 mb-3">Try a value that breaks the rule (this will fail):</p>
+          <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+        INSERT INTO payments(payment_id, amount)
+        VALUES (1, -50.00);
+          </pre>
+
+          <div class="mt-4 text-slate-700">
+            <p><span class="font-semibold">chk_amount_positive</span> is just a name; you can choose any valid name.</p>
+            <p>MySQL enforces CHECK constraints starting from version 8.0.16.</p>
+          </div>
+        </div>
+
+        <!-- Lesson 16 -->
+        <div class="lesson-card p-6 mb-6" id="lesson-16">
+          <h2 class="text-2xl font-bold text-sky-700 mb-3">Lesson 16: Primary Key</h2>
+          <p class="mb-3">A primary key uniquely identifies each row and prevents duplicate ids.</p>
+          <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    CREATE TABLE patients_pk(
+      patient_id INT PRIMARY KEY,
+      full_name VARCHAR(100) NOT NULL,
+      date_of_birth DATE
+    );
+          </pre>
+
+          <p class="mt-4 mb-3">Add a primary key after the table exists:</p>
+          <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    ALTER TABLE patients_pk
+    ADD CONSTRAINT pk_patients PRIMARY KEY (patient_id);
+          </pre>
+
+              <p class="mt-4 mb-3">If you want to remove the primary key, use the constraint name:</p>
+              <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+            ALTER TABLE patients_pk
+            DROP CONSTRAINT pk_patients; -- Uses the name you gave it
+              </pre>
+
+              <p class="mt-4 mb-3">Insert a valid row:</p>
+              <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+            INSERT INTO patients_pk(patient_id, full_name, date_of_birth)
+            VALUES (1, 'Hnin Thandar', '1999-07-18');
+              </pre>
+
+            <p class="mt-4 mb-3">Try a duplicate id (this will fail):</p>
+            <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+          INSERT INTO patients_pk(patient_id, full_name, date_of_birth)
+          VALUES (1, 'Duplicate Patient', '2000-01-01');
+            </pre>
+        </div>
+
+        <!-- Lesson 17 -->
+        <div class="lesson-card p-6 mb-6" id="lesson-17">
+          <h2 class="text-2xl font-bold text-teal-700 mb-3">Lesson 17: AUTO_INCREMENT</h2>
+          <p class="mb-3">Let MySQL generate a new id for each row automatically.</p>
+          <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    CREATE TABLE patients_auto(
+      patient_id INT PRIMARY KEY AUTO_INCREMENT,
+      full_name VARCHAR(100) NOT NULL,
+      date_of_birth DATE
+    );
+
+    INSERT INTO patients_auto(full_name, date_of_birth)
+    VALUES ('May Thu', '1998-09-12');
+
+    INSERT INTO patients_auto(full_name, date_of_birth)
+    VALUES ('Aung Aung', '2001-04-30');
+          </pre>
+
+          <div class="mt-4 text-slate-700">
+            <p>You can set a starting value with <span class="font-semibold">AUTO_INCREMENT = 100</span> on the table.</p>
+            <p>Auto ids can skip numbers if rows are deleted.</p>
+          </div>
+
+          <p class="mt-4 mb-3">Set the starting value after the table exists:</p>
+          <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+    ALTER TABLE patients_auto AUTO_INCREMENT = 100;
+          </pre>
+
+              <p class="mt-4 mb-3">Insert another row and view the results:</p>
+              <pre class="bg-slate-950 text-emerald-200 p-4 rounded-lg">
+            INSERT INTO patients_auto (full_name, date_of_birth)
+            VALUES ('New Patient', '2000-01-01');
+
+            SELECT * FROM patients_auto;
+              </pre>
+        </div>
+
+    <!-- End -->
+    <div class="lesson-card p-6 text-center">
+      <h2 class="text-2xl font-bold text-emerald-800 mb-2">Practice Tip</h2>
+      <p class="text-slate-700">Run each command step by step in MySQL Workbench to understand how database management works.</p>
+      <a class="inline-flex items-center gap-2 mt-4 text-emerald-700 font-semibold" href="#top">Back to top</a>
+    </div>
+
+  </div>
+
+  <a class="back-to-top" href="#top" aria-label="Back to top">Top</a>
+
+</body>
+</html>
