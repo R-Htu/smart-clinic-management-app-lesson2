@@ -1,6 +1,6 @@
 # 🏥 Smart Clinic Management System - Tkinter Tutorial
 
-A **3-day beginner-friendly Tkinter tutorial** for building a modern clinic management interface. Perfect for teaching Python GUI programming to students step-by-step.
+A **3-day  Tkinter tutorial** for building a modern clinic management interface. Perfect for teaching Python GUI programming to students step-by-step.
 
 ![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)
 ![Tkinter](https://img.shields.io/badge/GUI-Tkinter-green.svg)
@@ -363,8 +363,8 @@ SOFTWARE.
 Have questions? Found a bug? Want to share your project?
 
 - **GitHub Issues**: [Open an issue](https://github.com/yourusername/smart-clinic-tkinter-tutorial/issues)
-- **Email**: your.email@example.com
-- **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
+- **Email**: htuaung89.email@example.com
+- **Twitter**: [@Tuth5479577Tuth](https://twitter.com/yourhandle)
 
 ---
 
