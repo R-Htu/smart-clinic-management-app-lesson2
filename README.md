@@ -362,9 +362,9 @@ SOFTWARE.
 
 Have questions? Found a bug? Want to share your project?
 
-- **GitHub Issues**: [Open an issue](https://github.com/yourusername/smart-clinic-tkinter-tutorial/issues)
-- **Email**: htuaung89.email@example.com
-- **Twitter**: [@Tuth5479577Tuth](https://twitter.com/yourhandle)
+- **GitHub Issues**: [Open an issue](https://github.com/r-htuo/smart-clinic-tkinter-tutorial/issues)
+- **Email**: htuaung89.gmail.com
+- **X**: [@Tuth5479577Tuth](https://x.com/tuth547957tuth?s=11)
 
 ---
 
